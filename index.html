@@ -1,327 +1,328 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>星辰塔罗 · 在线占卜</title>
-  <meta name="description" content="塔罗牌在线占卜 - 78张完整牌库，6种经典牌阵，AI 智能解读。仅供娱乐参考。">
-
-  <!-- 字体 -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="app-shell">
-
-    <!-- ===== 顶部导航 ===== -->
-    <nav class="nav-bar">
-      <div class="nav-logo" onclick="navigateTo('home')">
-        <span class="nav-logo-icon">✦</span>
-        <span>星辰塔罗</span>
-      </div>
-      <ul class="nav-links">
-        <li><a href="javascript:void(0)" data-page="home" onclick="navigateTo('home')" class="active">首页</a></li>
-        
-        <li><a href="javascript:void(0)" data-page="spreads" onclick="navigateTo('spreads')">牌阵</a></li>
-        <li><a href="javascript:void(0)" data-page="draw" onclick="navigateTo('draw')">占卜</a></li>
-      </ul>
-    </nav>
-
-    <!-- ===== 主内容区 ===== -->
-    <main class="main-content">
-
-      <!-- ========== 首页 ========== -->
-      <section id="page-home" class="page active">
-
-        
-
-        <div class="container" style="padding: 12px 24px 0;">
-          <div class="panel panel-bordered">
-            <h3 style="text-align:center; margin-bottom: 10px; font-size: 0.95rem;">如何开始你的占卜之旅</h3>
-            <div style="display:grid; grid-template-columns: repeat(3,1fr); gap: 14px; text-align:center;">
-              <div>
-                <div style="font-size:1.4rem; color:var(--c-gold); margin-bottom:4px;">①</div>
-                <p style="font-size:0.78rem; color:var(--c-text-secondary);">选择一个与当下心境契合的牌阵</p>
-              </div>
-              <div>
-                <div style="font-size:1.4rem; color:var(--c-gold); margin-bottom:4px;">②</div>
-                <p style="font-size:0.78rem; color:var(--c-text-secondary);">静心冥想后抽取属于你的牌</p>
-              </div>
-              <div>
-                <div style="font-size:1.4rem; color:var(--c-gold); margin-bottom:4px;">③</div>
-                <p style="font-size:0.78rem; color:var(--c-text-secondary);">翻牌查看牌面含义与 AI 综合解读</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        
-        
-
-
-        <!-- 今日推荐问题 -->
-        <div class="daily-questions">
-          <div class="daily-questions-header">
-            <div class="daily-questions-title-row">
-              <span class="daily-questions-icon">✨</span>
-              <h3 class="daily-questions-title">今日推荐问题</h3>
-            </div>
-            <button class="daily-questions-more" onclick="navigateTo('questions')">
-              查看全部 →
-            </button>
-          </div>
-          <div class="daily-questions-list" id="daily-questions-list">
-          </div>
-          <div class="daily-questions-footer">
-            <button class="btn btn-ghost btn-sm daily-shuffle-btn" onclick="shuffleDailyQuestions()">
-              <span>🔄</span> 换一批
-            </button>
-          </div>
-        </div>
-        <div class="hero">
-          <div class="hero-moon"></div>
-          <div class="hero-content">
-            <div class="hero-symbol">🌙</div>
-            <h1 class="hero-title">星辰塔罗</h1>
-            <div class="hero-subtitle">Celestial Tarot Divination</div>
-            <p class="hero-tagline">
-              78 张完整塔罗牌库，6 种经典牌阵布局<br>
-              让千年智慧映照当下，倾听内心的声音
-            </p>
-            <div class="hero-actions">
-              <button class="btn btn-primary btn-lg" onclick="navigateTo('spreads')">开始占卜</button>
-              <button class="btn btn-ghost btn-lg" onclick="navigateTo('spreads')">浏览牌阵</button>
-            </div>
-          </div>
-        </div>
-
-<!-- 快速占卜入口 -->
-        <div class="quick-divine">
-          <div class="quick-divine-card">
-            <div class="quick-divine-en">QUICK DIVINATION</div>
-            <h2 class="quick-divine-title">心中默念你的问题</h2>
-            <p class="quick-divine-desc">输入你想占卜的问题，直接开始三张时间流牌阵解读</p>
-            <div class="quick-divine-input-wrap">
-              <input type="text" id="home-question-input" class="quick-divine-input" 
-                placeholder="例如：我接下来的事业运势如何？" 
-                maxlength="100"
-                onkeypress="if(event.key==='Enter')quickStartDivination()" />
-              <button class="btn btn-primary quick-divine-btn" onclick="quickStartDivination()">
-                开始占卜
-              </button>
-            </div>
-            <div class="quick-divine-tips">
-              <span>💡 小贴士：</span>
-              <span>问题越具体，解读越有针对性。推荐使用「三张时间流」快速了解过去、现在、未来。</span>
-            </div>
-          </div>
-        </div>
-        <div class="feature-grid">
-          <div class="feature-card">
-            <span class="feature-icon">🎴</span>
-            <h3>完整牌库</h3>
-            <p>22 张大阿尔卡那 + 56 张小阿尔卡那，权杖、圣杯、宝剑、星币四大花色，每张牌均含正逆位解读</p>
-          </div>
-          <div class="feature-card">
-            <span class="feature-icon">🔮</span>
-            <h3>六种牌阵</h3>
-            <p>单张指引、三张时间流、身心灵、抉择十字、关系牌阵、凯尔特十字，满足不同场景的占卜需求</p>
-          </div>
-          <div class="feature-card">
-            <span class="feature-icon">✨</span>
-            <h3>AI 智能解读</h3>
-            <p>基于牌面组合与位置关系的综合解读，自动分析正逆位与关键词，为你呈现完整的叙事脉络</p>
-          </div>
-        </div>
-
-        <div class="divider-gold">
-          <span class="divider-gold-icon">✦</span>
-        </div>
-      </section>
-
-      <!-- ========== 常用问题页 ========== -->
-      <section id="page-questions" class="page">
-        <div class="page-header">
-          <h1 class="page-title">常用问题</h1>
-          <p class="page-desc">不知道怎么问，就从这里开始。先选一个最接近你当下困惑的问题</p>
-          <div class="divider-gold"><span class="divider-gold-icon">✦</span></div>
-        </div>
-
-        <!-- 引导卡片 -->
-        <div class="container-narrow">
-          <div class="q-guide-card">
-            <div class="q-guide-en">START WITH A QUESTION</div>
-            <h2 class="q-guide-title">不知道怎么问，就从这里开始</h2>
-            <p class="q-guide-desc">先选一个最接近你当下困惑的问题，再由它推荐 1-3 个合适的牌阵和专属提问模板。</p>
-          </div>
-        </div>
-
-        <!-- 分类标签 -->
-        <div class="q-category-tabs" id="q-category-tabs">
-          <!-- JS 动态渲染 -->
-        </div>
-
-        <!-- 问题列表 -->
-        <div class="q-list-container" id="q-list-container">
-          <!-- JS 动态渲染 -->
-        </div>
-      </section>
-
-      <!-- ========== 牌阵选择页 ========== -->
-      <section id="page-spreads" class="page">
-        <div class="page-header">
-          <h1 class="page-title">选择牌阵</h1>
-          <p class="page-desc">每种牌阵都有独特的布局与解读维度，选择最契合你当下疑问的那一个</p>
-          <div class="divider-gold"><span class="divider-gold-icon">✦</span></div>
-        </div>
-        <div class="spread-grid" id="spread-grid">
-          <!-- JS 动态渲染 -->
-        </div>
-      </section>
-
-      <!-- ========== 抽牌页 ========== -->
-      <section id="page-draw" class="page">
-        <div class="draw-area">
-          <div class="draw-header">
-            <h2 class="draw-spread-name" id="draw-spread-name">—</h2>
-            <p class="draw-prompt" id="draw-spread-desc">—</p>
-          </div>
-
-          <!-- 抽牌模式切换 -->
-          <div class="draw-mode-toggle">
-            <button class="draw-mode-btn active" data-mode="auto" onclick="setDrawMode('auto')">自动抽牌</button>
-            <button class="draw-mode-btn" data-mode="manual" onclick="setDrawMode('manual')">手动抽牌</button>
-          </div>
-
-          <!-- 问题输入 -->
-          <div class="question-input-box">
-            <div class="question-input-label">
-              <span class="question-input-icon">✦</span>
-              <span>请输入你想占卜的问题</span>
-            </div>
-            <textarea id="question-input" class="question-textarea"
-              placeholder="例如：我和他的关系接下来会如何发展？"
-              maxlength="200"
-              oninput="onQuestionInput()"></textarea>
-            <div class="question-input-count"><span id="question-count">0</span>/200</div>
-          </div>
-
-          <!-- 牌阵画布 -->
-          <div class="spread-canvas" id="spread-canvas">
-            <!-- JS 动态渲染牌位 -->
-          </div>
-
-          <!-- 抽牌进度 -->
-          <div class="draw-progress">
-            <span id="draw-progress-text">0 / 0</span>
-            <div class="progress-dots" id="progress-dots"></div>
-          </div>
-
-          <!-- 自动模式 - 牌堆 -->
-          <div class="draw-deck" id="draw-deck">
-            <!-- JS 动态渲染 -->
-          </div>
-
-          <!-- 手动模式 - 扇形展开 -->
-          <div class="fan-deck hidden" id="fan-deck">
-            <!-- JS 动态渲染 -->
-          </div>
-
-          <!-- 操作按钮 -->
-          <button class="btn btn-primary btn-lg" id="draw-action-btn" onclick="onDrawAction()">抽一张牌</button>
-        </div>
-      </section>
-
-      <!-- ========== 结果展示页 ========== -->
-      <section id="page-result" class="page">
-        <div class="result-area">
-          <div class="result-header">
-            <h1 class="result-spread-name" id="result-spread-name">—</h1>
-            <div class="result-date" id="result-date">—</div>
-            <div class="divider-gold"><span class="divider-gold-icon">✦</span></div>
-          </div>
-
-          <!-- 牌阵展示 -->
-          <div class="result-spread-canvas" id="result-spread-canvas">
-            <!-- JS 动态渲染 -->
-          </div>
-
-          <!-- 逐牌解读 -->
-          <div class="reading-grid" id="reading-grid">
-            <!-- JS 动态渲染 -->
-          </div>
-
-          <!-- AI 综合解读 -->
-          <div class="ai-reading-section">
-            <div class="ai-reading-header">
-              <span class="ai-reading-icon">🔮</span>
-              <h2 class="ai-reading-title">AI 综合解读</h2>
-            </div>
-
-            <!-- 加载中 -->
-            <div class="ai-reading-body" id="ai-reading-loading">
-              <div class="ai-loading">
-                <span>星辰正在解读牌面...</span>
-                <div class="ai-loading-dots">
-                  <span class="ai-loading-dot"></span>
-                  <span class="ai-loading-dot"></span>
-                  <span class="ai-loading-dot"></span>
-                </div>
-              </div>
-            </div>
-
-            <!-- 解读内容 -->
-            <div class="ai-reading-body hidden" id="ai-reading-content">
-              <!-- JS 动态渲染 -->
-            </div>
-
-            <!-- 重新生成按钮 -->
-            <div class="text-center mt-3 hidden" id="ai-action-btn">
-              <button class="btn btn-ghost btn-sm" onclick="regenerateAIReading()">重新生成解读</button>
-            </div>
-          </div>
-
-          <!-- 免责声明 -->
-          <div class="disclaimer">
-            <span class="disclaimer-icon">⚠️</span>
-            <div class="disclaimer-text">
-              <strong>免责声明：</strong>本占卜结果仅供娱乐与文化参考，不构成任何专业建议（包括但不限于医疗、法律、财务、心理咨询等）。塔罗牌无法预测未来或决定命运，所有解读均为随机牌面的象征性阐释。请理性看待占卜结果，重要决策请咨询专业人士。使用本服务即表示你已阅读并同意此声明。
-            </div>
-          </div>
-
-          <!-- 底部操作 -->
-          <div class="text-center mt-3" style="padding-bottom: 40px;">
-            <button class="btn btn-primary" onclick="navigateTo('spreads')">再来一次</button>
-            <button class="btn btn-ghost" onclick="navigateTo('home')">返回首页</button>
-          </div>
-        </div>
-      </section>
-
-    </main>
-
-    <!-- ===== 底部常驻免责声明 ===== -->
-    <div class="disclaimer-bar">
-      ⚠ 本站塔罗占卜仅供娱乐参考，不构成任何专业建议 | 请理性看待
-    </div>
-
-    <!-- ===== 页脚 ===== -->
-    <footer class="page-footer">
-      <p class="footer-text">
-        星辰塔罗 · Celestial Tarot<br>
-        本站为纯前端原型展示 · 78张完整牌库 · 6种经典牌阵<br>
-        © 2026 仅供娱乐与文化探索
-      </p>
-    </footer>
-
-  </div>
-
-  <!-- ===== 脚本 ===== -->
-  <script src="data/tarot-deck.js"></script>
-  <script src="data/spreads.js"></script>
-  <script src="data/questions.js"></script>
-  <script src="app.js"></script>
-</body>
-</html>
+1	1	<!DOCTYPE html>
+2	2	<html lang="zh-CN">
+3	3	<head>
+4	4	  <meta charset="UTF-8">
+5	5	  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+6	6	  <title>星辰塔罗 · 在线占卜</title>
+7	7	  <meta name="description" content="塔罗牌在线占卜 - 78张完整牌库，6种经典牌阵，AI 智能解读。仅供娱乐参考。">
+8	8	
+9	9	  <!-- 字体 -->
+10	10	  <link rel="preconnect" href="https://fonts.googleapis.com">
+11	11	  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+12	12	  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+13	13	
+14	14	  <link rel="stylesheet" href="styles.css">
+15	15	</head>
+16	16	<body>
+17	17	  <div class="app-shell">
+18	18	
+19	19	    <!-- ===== 顶部导航 ===== -->
+20	20	    <nav class="nav-bar">
+21	21	      <div class="nav-logo" onclick="navigateTo('home')">
+22	22	        <span class="nav-logo-icon">✦</span>
+23	23	        <span>星辰塔罗</span>
+24	24	      </div>
+25	25	      <ul class="nav-links">
+26	26	        <li><a href="javascript:void(0)" data-page="home" onclick="navigateTo('home')" class="active">首页</a></li>
+27	27	        
+28	28	        <li><a href="javascript:void(0)" data-page="spreads" onclick="navigateTo('spreads')">牌阵</a></li>
+29	29	        <li><a href="javascript:void(0)" data-page="draw" onclick="navigateTo('draw')">占卜</a></li>
+30	30	      </ul>
+31	31	    </nav>
+32	32	
+33	33	    <!-- ===== 主内容区 ===== -->
+34	34	    <main class="main-content">
+35	35	
+36	36	      <!-- ========== 首页 ========== -->
+37	37	      <section id="page-home" class="page active">
+38	38	
+39	39	        
+40	40	
+41	41	        <div class="container" style="padding: 12px 24px 0;">
+42	42	          <div class="panel panel-bordered">
+43	43	            <h3 style="text-align:center; margin-bottom: 10px; font-size: 0.95rem;">如何开始你的占卜之旅</h3>
+44	44	            <div style="display:grid; grid-template-columns: repeat(3,1fr); gap: 14px; text-align:center;">
+45	45	              <div>
+46	46	                <div style="font-size:1.4rem; color:var(--c-gold); margin-bottom:4px;">①</div>
+47	47	                <p style="font-size:0.78rem; color:var(--c-text-secondary);">选择一个与当下心境契合的牌阵</p>
+48	48	              </div>
+49	49	              <div>
+50	50	                <div style="font-size:1.4rem; color:var(--c-gold); margin-bottom:4px;">②</div>
+51	51	                <p style="font-size:0.78rem; color:var(--c-text-secondary);">静心冥想后抽取属于你的牌</p>
+52	52	              </div>
+53	53	              <div>
+54	54	                <div style="font-size:1.4rem; color:var(--c-gold); margin-bottom:4px;">③</div>
+55	55	                <p style="font-size:0.78rem; color:var(--c-text-secondary);">翻牌查看牌面含义与 AI 综合解读</p>
+56	56	              </div>
+57	57	            </div>
+58	58	          </div>
+59	59	        </div>
+60	60	
+61	61	        
+62	62	        
+63	63	
+64	64	
+65	65	        <!-- 今日推荐问题 -->
+66	66	        <div class="daily-questions">
+67	67	          <div class="daily-questions-header">
+68	68	            <div class="daily-questions-title-row">
+69	69	              <span class="daily-questions-icon">✨</span>
+70	70	              <h3 class="daily-questions-title">今日推荐问题</h3>
+71	71	            </div>
+72	72	            <button class="daily-questions-more" onclick="navigateTo('questions')">
+73	73	              查看全部 →
+74	74	            </button>
+75	75	          </div>
+76	76	          <div class="daily-questions-list" id="daily-questions-list">
+77	77	          </div>
+78	78	          <div class="daily-questions-footer">
+79	79	            <button class="btn btn-ghost btn-sm daily-shuffle-btn" onclick="shuffleDailyQuestions()">
+80	80	              <span>🔄</span> 换一批
+81	81	            </button>
+82	82	          </div>
+83	83	        </div>
+84	84	        <div class="hero">
+85	85	          <div class="hero-moon"></div>
+86	86	          <div class="hero-content">
+87	87	            <div class="hero-symbol">🌙</div>
+88	88	            <h1 class="hero-title">星辰塔罗</h1>
+89	89	            <div class="hero-subtitle">Celestial Tarot Divination</div>
+90	90	            <p class="hero-tagline">
+91	91	              78 张完整塔罗牌库，6 种经典牌阵布局<br>
+92	92	              让千年智慧映照当下，倾听内心的声音
+93	93	            </p>
+94	94	            <div class="hero-actions">
+95	95	              <button class="btn btn-primary btn-lg" onclick="navigateTo('spreads')">开始占卜</button>
+96	96	              <button class="btn btn-ghost btn-lg" onclick="navigateTo('spreads')">浏览牌阵</button>
+97	97	            </div>
+98	98	          </div>
+99	99	        </div>
+100	100	
+101	101	<!-- 快速占卜入口 -->
+102	102	        <div class="quick-divine">
+103	103	          <div class="quick-divine-card">
+104	104	            <div class="quick-divine-en">QUICK DIVINATION</div>
+105	105	            <h2 class="quick-divine-title">心中默念你的问题</h2>
+106	106	            <p class="quick-divine-desc">输入你想占卜的问题，直接开始三张时间流牌阵解读</p>
+107	107	            <div class="quick-divine-input-wrap">
+108	108	              <input type="text" id="home-question-input" class="quick-divine-input" 
+109	109	                placeholder="例如：我接下来的事业运势如何？" 
+110	110	                maxlength="100"
+111	111	                onkeypress="if(event.key==='Enter')quickStartDivination()" />
+112	112	              <button class="btn btn-primary quick-divine-btn" onclick="quickStartDivination()">
+113	113	                开始占卜
+114	114	              </button>
+115	115	            </div>
+116	116	            <div class="quick-divine-tips">
+117	117	              <span>💡 小贴士：</span>
+118	118	              <span>问题越具体，解读越有针对性。推荐使用「三张时间流」快速了解过去、现在、未来。</span>
+119	119	            </div>
+120	120	          </div>
+121	121	        </div>
+122	122	        <div class="feature-grid">
+123	123	          <div class="feature-card">
+124	124	            <span class="feature-icon">🎴</span>
+125	125	            <h3>完整牌库</h3>
+126	126	            <p>22 张大阿尔卡那 + 56 张小阿尔卡那，权杖、圣杯、宝剑、星币四大花色，每张牌均含正逆位解读</p>
+127	127	          </div>
+128	128	          <div class="feature-card">
+129	129	            <span class="feature-icon">🔮</span>
+130	130	            <h3>六种牌阵</h3>
+131	131	            <p>单张指引、三张时间流、身心灵、抉择十字、关系牌阵、凯尔特十字，满足不同场景的占卜需求</p>
+132	132	          </div>
+133	133	          <div class="feature-card">
+134	134	            <span class="feature-icon">✨</span>
+135	135	            <h3>AI 智能解读</h3>
+136	136	            <p>基于牌面组合与位置关系的综合解读，自动分析正逆位与关键词，为你呈现完整的叙事脉络</p>
+137	137	          </div>
+138	138	        </div>
+139	139	
+140	140	        <div class="divider-gold">
+141	141	          <span class="divider-gold-icon">✦</span>
+142	142	        </div>
+143	143	      </section>
+144	144	
+145	145	      <!-- ========== 常用问题页 ========== -->
+146	146	      <section id="page-questions" class="page">
+147	147	        <div class="page-header">
+148	148	          <h1 class="page-title">常用问题</h1>
+149	149	          <p class="page-desc">不知道怎么问，就从这里开始。先选一个最接近你当下困惑的问题</p>
+150	150	          <div class="divider-gold"><span class="divider-gold-icon">✦</span></div>
+151	151	        </div>
+152	152	
+153	153	        <!-- 引导卡片 -->
+154	154	        <div class="container-narrow">
+155	155	          <div class="q-guide-card">
+156	156	            <div class="q-guide-en">START WITH A QUESTION</div>
+157	157	            <h2 class="q-guide-title">不知道怎么问，就从这里开始</h2>
+158	158	            <p class="q-guide-desc">先选一个最接近你当下困惑的问题，再由它推荐 1-3 个合适的牌阵和专属提问模板。</p>
+159	159	          </div>
+160	160	        </div>
+161	161	
+162	162	        <!-- 分类标签 -->
+163	163	        <div class="q-category-tabs" id="q-category-tabs">
+164	164	          <!-- JS 动态渲染 -->
+165	165	        </div>
+166	166	
+167	167	        <!-- 问题列表 -->
+168	168	        <div class="q-list-container" id="q-list-container">
+169	169	          <!-- JS 动态渲染 -->
+170	170	        </div>
+171	171	      </section>
+172	172	
+173	173	      <!-- ========== 牌阵选择页 ========== -->
+174	174	      <section id="page-spreads" class="page">
+175	175	        <div class="page-header">
+176	176	          <h1 class="page-title">选择牌阵</h1>
+177	177	          <p class="page-desc">每种牌阵都有独特的布局与解读维度，选择最契合你当下疑问的那一个</p>
+178	178	          <div class="divider-gold"><span class="divider-gold-icon">✦</span></div>
+179	179	        </div>
+180	180	        <div class="spread-grid" id="spread-grid">
+181	181	          <!-- JS 动态渲染 -->
+182	182	        </div>
+183	183	      </section>
+184	184	
+185	185	      <!-- ========== 抽牌页 ========== -->
+186	186	      <section id="page-draw" class="page">
+187	187	        <div class="draw-area">
+188	188	          <div class="draw-header">
+189	189	            <h2 class="draw-spread-name" id="draw-spread-name">—</h2>
+190	190	            <p class="draw-prompt" id="draw-spread-desc">—</p>
+191	191	          </div>
+192	192	
+193	193	          198	198	
+199	199	          <!-- 问题输入 -->
+200	200	          <div class="question-input-box">
+201	201	            <div class="question-input-label">
+202	202	              <span class="question-input-icon">✦</span>
+203	203	              <span>请输入你想占卜的问题</span>
+204	204	            </div>
+205	205	            <textarea id="question-input" class="question-textarea"
+206	206	              placeholder="例如：我和他的关系接下来会如何发展？"
+207	207	              maxlength="200"
+208	208	              oninput="onQuestionInput()"></textarea>
+209	209	            <div class="question-input-count"><span id="question-count">0</span>/200</div>
+210	210	          </div>
+211	211	
+212	212	          <!-- 牌阵画布 -->
+213	213	          <div class="spread-canvas" id="spread-canvas">
+214	214	            <!-- JS 动态渲染牌位 -->
+215	215	          </div>
+216	216	
+217	217	          <!-- 抽牌模式切换 -->
+218	          <div class="draw-mode-toggle">
+219	            <button class="draw-mode-btn active" data-mode="auto" onclick="setDrawMode('auto')">自动抽牌</button>
+220	            <button class="draw-mode-btn" data-mode="manual" onclick="setDrawMode('manual')">手动抽牌</button>
+221	          </div>
+222	
+223	          <!-- 抽牌进度 -->
+224	218	          <div class="draw-progress">
+225	219	            <span id="draw-progress-text">0 / 0</span>
+226	220	            <div class="progress-dots" id="progress-dots"></div>
+227	221	          </div>
+228	222	
+229	223	          <!-- 自动模式 - 牌堆 -->
+230	224	          <div class="draw-deck" id="draw-deck">
+231	225	            <!-- JS 动态渲染 -->
+232	226	          </div>
+233	227	
+234	228	          <!-- 手动模式 - 扇形展开 -->
+235	229	          <div class="fan-deck hidden" id="fan-deck">
+236	230	            <!-- JS 动态渲染 -->
+237	231	          </div>
+238	232	
+239	233	          <!-- 操作按钮 -->
+240	234	          <button class="btn btn-primary btn-lg" id="draw-action-btn" onclick="onDrawAction()">抽一张牌</button>
+241	235	        </div>
+242	236	      </section>
+243	237	
+244	238	      <!-- ========== 结果展示页 ========== -->
+245	239	      <section id="page-result" class="page">
+246	240	        <div class="result-area">
+247	241	          <div class="result-header">
+248	242	            <h1 class="result-spread-name" id="result-spread-name">—</h1>
+249	243	            <div class="result-date" id="result-date">—</div>
+250	244	            <div class="divider-gold"><span class="divider-gold-icon">✦</span></div>
+251	245	          </div>
+252	246	
+253	247	          <!-- 牌阵展示 -->
+254	248	          <div class="result-spread-canvas" id="result-spread-canvas">
+255	249	            <!-- JS 动态渲染 -->
+256	250	          </div>
+257	251	
+258	252	          <!-- 逐牌解读 -->
+259	253	          <div class="reading-grid" id="reading-grid">
+260	254	            <!-- JS 动态渲染 -->
+261	255	          </div>
+262	256	
+263	257	          <!-- AI 综合解读 -->
+264	258	          <div class="ai-reading-section">
+265	259	            <div class="ai-reading-header">
+266	260	              <span class="ai-reading-icon">🔮</span>
+267	261	              <h2 class="ai-reading-title">AI 综合解读</h2>
+268	262	            </div>
+269	263	
+270	264	            <!-- 加载中 -->
+271	265	            <div class="ai-reading-body" id="ai-reading-loading">
+272	266	              <div class="ai-loading">
+273	267	                <span>星辰正在解读牌面...</span>
+274	268	                <div class="ai-loading-dots">
+275	269	                  <span class="ai-loading-dot"></span>
+276	270	                  <span class="ai-loading-dot"></span>
+277	271	                  <span class="ai-loading-dot"></span>
+278	272	                </div>
+279	273	              </div>
+280	274	            </div>
+281	275	
+282	276	            <!-- 解读内容 -->
+283	277	            <div class="ai-reading-body hidden" id="ai-reading-content">
+284	278	              <!-- JS 动态渲染 -->
+285	279	            </div>
+286	280	
+287	281	            <!-- 重新生成按钮 -->
+288	282	            <div class="text-center mt-3 hidden" id="ai-action-btn">
+289	283	              <button class="btn btn-ghost btn-sm" onclick="regenerateAIReading()">重新生成解读</button>
+290	284	            </div>
+291	285	          </div>
+292	286	
+293	287	          <!-- 免责声明 -->
+294	288	          <div class="disclaimer">
+295	289	            <span class="disclaimer-icon">⚠️</span>
+296	290	            <div class="disclaimer-text">
+297	291	              <strong>免责声明：</strong>本占卜结果仅供娱乐与文化参考，不构成任何专业建议（包括但不限于医疗、法律、财务、心理咨询等）。塔罗牌无法预测未来或决定命运，所有解读均为随机牌面的象征性阐释。请理性看待占卜结果，重要决策请咨询专业人士。使用本服务即表示你已阅读并同意此声明。
+298	292	            </div>
+299	293	          </div>
+300	294	
+301	295	          <!-- 底部操作 -->
+302	296	          <div class="text-center mt-3" style="padding-bottom: 40px;">
+303	297	            <button class="btn btn-primary" onclick="navigateTo('spreads')">再来一次</button>
+304	298	            <button class="btn btn-ghost" onclick="navigateTo('home')">返回首页</button>
+305	299	          </div>
+306	300	        </div>
+307	301	      </section>
+308	302	
+309	303	    </main>
+310	304	
+311	305	    <!-- ===== 底部常驻免责声明 ===== -->
+312	306	    <div class="disclaimer-bar">
+313	307	      ⚠ 本站塔罗占卜仅供娱乐参考，不构成任何专业建议 | 请理性看待
+314	308	    </div>
+315	309	
+316	310	    <!-- ===== 页脚 ===== -->
+317	311	    <footer class="page-footer">
+318	312	      <p class="footer-text">
+319	313	        星辰塔罗 · Celestial Tarot<br>
+320	314	        本站为纯前端原型展示 · 78张完整牌库 · 6种经典牌阵<br>
+321	315	        © 2026 仅供娱乐与文化探索
+322	316	      </p>
+323	317	    </footer>
+324	318	
+325	319	  </div>
+326	320	
+327	321	  <!-- ===== 脚本 ===== -->
+328	322	  <script src="data/tarot-deck.js"></script>
+329	323	  <script src="data/spreads.js"></script>
+330	324	  <script src="data/questions.js"></script>
+331	325	  <script src="app.js"></script>
+332	326	</body>
+333	327	</html>
